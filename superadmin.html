@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!-- ===== CSS ===== -->
+        <link rel="stylesheet" href="superadmin.css">
+        
+        <title>superadmin menu</title>
+    </head>
+    <body id="body-pd">
+        
+        <!--SIDE BAR-->
+        <div class="l-navbar" id="navbar">
+            <nav class="nav">
+                <div>
+                    <div class="nav__brand">
+                        <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
+                        <a href="#" class="nav__logo">BAOSEM</a>
+                    </div>
+                    <div class="nav__list">
+                        <a href="#" class="nav__link active">
+                            <ion-icon name="home-outline" class="nav__icon"></ion-icon>
+                            <span class="nav__name">MENU</span>
+                        </a>
+                        <div  class="nav__link collapse">
+                            <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
+                            <span class="nav__name">DEMANDES</span>
+
+                            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+
+                            <ul class="collapse__menu">
+                                <a href="#" class="collapse__sublink">CONGE</a>
+                                <a href="#" class="collapse__sublink">MALADIE</a>
+                                <a href="#" class="collapse__sublink">MATERNITE</a>
+                            </ul>
+                        </div>
+                        
+                        <div  class="nav__link collapse">
+                            <ion-icon name="server-outline"></ion-icon>
+                            <span class="nav__name">DEPARTEMENTS</span>
+
+                            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+
+                            <ul class="collapse__menu">
+                                <a href="#" class="collapse__sublink">Data</a>
+                                <a href="#" class="collapse__sublink">Group</a>
+                                <a href="#" class="collapse__sublink">Members</a>
+                            </ul>
+                        </div>
+
+                        
+                        <div class="nav__link collapse">
+                            <ion-icon name="people-outline" class="nav__icon"></ion-icon>
+                            <span class="nav__name">PERSONNEL</span>
+
+                            <ul class="collapse__menu">
+                                <a href="#" class="collapse__sublink">Data</a>
+                                <a href="#" class="collapse__sublink">Group</a>
+                                <a href="#" class="collapse__sublink">Members</a>
+                            </ul>
+                        </div>
+                        
+                        <a href="#" class="nav__link">
+                            <ion-icon name="pie-chart-outline" class="nav__icon"></ion-icon>
+                            <span class="nav__name">ADMINS</span>
+                        </a>
+                        <a href="#" class="nav__link">
+                            <ion-icon name="settings-outline" class="nav__icon"></ion-icon>
+                            <span class="nav__name">PARAMETRE</span>
+                        </a>
+                    </div>
+                </div>
+
+                <a href="#" class="nav__link">
+                    <ion-icon name="log-out-outline" class="nav__icon"></ion-icon>
+                    <span class="nav__name">DECONNECTER</span>
+                </a>
+            </nav>
+        </div>
+<!--dshboard-->
+
+    <div class="container-fluid my-2">
+     <h2>MENU</h2>
+    <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card card-custom border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                NOMBRE D'EMLOYE</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">#</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bx bxs-book-open bx-lg text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card card-custom border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                               NOMBRE DE DEPARTEMENTS</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">#</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bx bxs-book-add bx-lg text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card card-custom border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                NOMBRE DE DEMANDES</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">#</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="bx bxs-book bx-lg text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card card-custom border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                NOMBRE D'ADMINS</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">#</div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      
+
+        
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- ===== IONICONS ===== -->
+        <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+        
+        <!-- ===== MAIN JS ===== -->
+        <script src="superadmin.js"></script>
+    </body>
+</html>
