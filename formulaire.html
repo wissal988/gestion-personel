@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!---Coding By CodingLab | www.codinglabweb.com--->
 <html lang="en">
@@ -10,22 +11,22 @@
     <link rel="stylesheet" href="formulaire.css" />
   </head>
   <body>
-    <section class="container">
+    <section class="container" style="display: block;">
       <header>demande de conge</header>
       <form action="#" class="form">
        <div class="gender-box">
           <div class="gender-option">
             <div class="gender">
-              <input type="radio" id="check-male" name="gender" checked />
-              <label for="check-male">annuel detente</label>
+              <input type="radio" id="check-male" name="gender"  >
+              <label> annuel detente</label>
             </div>
             <div class="gender">
               <input type="radio" id="check-female" name="gender" onclick="displayField()" />
-              <label for="check-female">recuperation</label>
+              <label >recuperation</label>
             </div>
             <div class="gender">
-              <input type="radio" id="check-other" name="gender" />
-              <label for="check-other">exceptionel</label>
+              <input type="radio" id="check-other" name="gender"  />
+              <label >exceptionel</label>
             </div>
           </div>
         </div> 
@@ -96,6 +97,7 @@
         var field = document.getElementById("recuperation");
         field.style.display = (field.style.display == "block") ? "none" : "block";
       }
+      
     </script>
   </body>
 </html>
