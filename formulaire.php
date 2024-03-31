@@ -92,22 +92,22 @@ $json = json_encode($data);
       <form action="#" class="form">
        <div class="gender-box">
           <div class="gender-option">
-            <div class="gender"name="type_conge">
-              <input type="radio" id="check-male"   >
+            <div class="gender" name="type_conge">
+              <input type="radio" id="check-male"  name="type" onclick="toggleField(false)" />
               <label> annuel detente</label>
             </div>
             <div class="gender">
-              <input type="radio" id="check-female" name="gender" onclick="displayField()" />
+              <input type="radio" id="check-female" name="type"onclick="toggleField(true)" />
               <label >recuperation</label>
             </div>
             <div class="gender">
-              <input type="radio" id="check-other" name="gender"  />
+              <input type="radio" id="check-other" name="type" onclick="toggleField(false)"/>
               <label >exceptionel</label>
             </div>
           </div>
         </div> 
         
-
+<div id="simple" style="display: block;">
         <div class="column">
           <div class="input-box">
             <label>fonction</label>
@@ -139,6 +139,7 @@ $json = json_encode($data);
             <input type="date" placeholder=""name="date_r">
           </div>
         </div>
+      </div>
         <div id="recuperation" style="display: none;">
         <div class="input-box">
           <label>la date de permanance </label>
@@ -161,10 +162,14 @@ $json = json_encode($data);
       </form>
     </section>
     <script>
-      function displayField() {
-        var field = document.getElementById("recuperation");
-        field.style.display = (field.style.display == "block") ? "none" : "block";
-      }
+      function toggleField(show) {
+  var recuperation = document.getElementById("recuperation");
+  if (show) {
+    recuperation.style.display = "block";
+  } else {
+    recuperation.style.display = "none";
+  }
+}
       
     </script>
   </body>
