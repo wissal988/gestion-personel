@@ -13,8 +13,7 @@ try {
 }
 
 if (isset($_POST['Save'])) {
-	  $nom = $_POST['nom'];
-    $prenom = $_POST['prenom'];
+	 
     $type_conge = $_POST['type_conge'];
     $fonction = $_POST['fonction'];
     $affectation = $_POST['affectation'];
@@ -30,12 +29,11 @@ if (isset($_POST['Save'])) {
     
             try {
                 // Préparation et exécution de la requête d'insertion
-                $sql = "INSERT INTO demande_conge (nom,prenom,type_conge, fonction, affectation,exercice,nbr_jours,date_d,date_f,date_r,date_p,date_jour_f,date_jour_snum_titre) 
-                VALUES (:nom,:prenom,:type_conge,: fonction, :affectation,:exercice,:nbr_jours,:date_d,:date_f,:date_r,:date_p,:date_jour_f,:date_jour_,:snum_titre) ";
+                $sql = "INSERT INTO demande_conge (type_conge, fonction, affectation,exercice,nbr_jours,date_d,date_f,date_r,date_p,date_jour_f,date_jour_snum_titre) 
+                VALUES (:type_conge,: fonction, :affectation,:exercice,:nbr_jours,:date_d,:date_f,:date_r,:date_p,:date_jour_f,:date_jour_,:snum_titre) ";
                 $stmt = $conn->prepare($sql);
-				$stmt->bindParam(':nss', $nss);
-                $stmt->bindParam(':nom', $nom);
-                $stmt->bindParam(':prenom', $prenom);
+				
+                
                 $stmt->bindParam(':type_conge', $type_conge);
                 $stmt->bindParam(':fonction', $fonction);
                 $stmt->bindParam(':affectation', $affectation);
@@ -108,15 +106,7 @@ $json = json_encode($data);
             </div>
           </div>
         </div> 
-        <div class="input-box">
-          <label>nom</label>
-          <input type="text" placeholder="" name="nom"required />
-        </div>
-
-        <div class="input-box">
-          <label>prenom</label>
-          <input type="text" placeholder="" name="prenom" required />
-        </div>
+        
 
         <div class="column">
           <div class="input-box">
