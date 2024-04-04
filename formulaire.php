@@ -12,8 +12,7 @@ try {
     echo '<script>alert("La connexion a échoué : ' . $e->getMessage() . '")</script>';
 }
 
-if (isset($_POST['Save'])) {
-	 
+if (isset($_POST['send'])) {
     $type_conge = $_POST['type_conge'];
     $fonction = $_POST['fonction'];
     $affectation = $_POST['affectation'];
@@ -26,55 +25,34 @@ if (isset($_POST['Save'])) {
     $date_jour_f = $_POST['date_jour_f'];
     $date_jour_s = $_POST['date_jour_s'];
     $num_titre = $_POST['num_titre'];
-    
-            try {
-                // Préparation et exécution de la requête d'insertion
-                $sql = "INSERT INTO demande_conge (type_conge, fonction, affectation,exercice,nbr_jours,date_d,date_f,date_r,date_p,date_jour_f,date_jour_snum_titre) 
-                VALUES (:type_conge,: fonction, :affectation,:exercice,:nbr_jours,:date_d,:date_f,:date_r,:date_p,:date_jour_f,:date_jour_,:snum_titre) ";
-                $stmt = $conn->prepare($sql);
-				
-                
-                $stmt->bindParam(':type_conge', $type_conge);
-                $stmt->bindParam(':fonction', $fonction);
-                $stmt->bindParam(':affectation', $affectation);
-                $stmt->bindParam(':exercice', $exercice);
-                $stmt->bindParam(':nbr_jours', $nbr_jours);
-                $stmt->bindParam(':date_d', $date_d);
-                $stmt->bindParam(':date_f', $date_f);
-                $stmt->bindParam(':date_r', $date_r);
-                $stmt->bindParam(':date_p', $date_p);
-                $stmt->bindParam(':date_jour_f', $date_jour_f);
-                $stmt->bindParam(':date_jour_s', $date_jour_s);
-                $stmt->bindParam(':num_titre', $num_titre);
-                $stmt->execute();
-				} catch (PDOException $e) {
-				// Check if the error is related to a foreign key constraint violation
-				if ($e->getCode() == '23000') {
-				echo '<script>alert("Please enter your information first.")</script>';
-				} else {
-				echo '<script>alert("Unable to process data. Error: ' . $e->getMessage() . '")</script>';
+
+    try {
+        // Préparation et exécution de la requête d'insertion
+        $sql = "INSERT INTO demande_conge 
+        VALUES (0,:type_conge,:fonction, :affectation,:exercice,:nbr_jours,:date_d,:date_f,:date_r,:date_p,:date_jour_f,:date_jour_s,:num_titre) ";
+        $requete = $conn->prepare($sql);
+        $requete->execute([
+            'type_conge' => $type_conge,
+            'fonction' => $fonction,
+            'affectation' => $affectation,
+            'exercice' => $exercice,
+            'nbr_jours' => $nbr_jours,
+            'date_d' => $date_d,
+            'date_f' => $date_f,
+            'date_r' => $date_r,
+            'date_p' => $date_p,
+            'date_jour_f' => $date_jour_f,
+            'date_jour_s' => $date_jour_s,
+            'num_titre' => $num_titre,
+        ]);
+        $reponse = $requete->fetchAll(PDO::FETCH_ASSOC);
+        var_dump($reponse);
+    } catch (PDOException $e) {
+        echo "Erreur : " . $e->getMessage();
     }
 }
-        }
-    
-
-
-// Sélection des données de la table 'demande'
-$query = 'SELECT * FROM demande_conge';
-$stmt = $conn->query($query);
-
-$data = array();
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-    $data[] = $row;
-}
-
-// Encodage des données en JSON
-$json = json_encode($data);
-
-// Envoyer les données JSON au client (décommentez les lignes ci-dessous si nécessaire)
-// header('Content-Type: application/json');
-// echo $json;
 ?>
+
 <!DOCTYPE html>
 <!---Coding By CodingLab | www.codinglabweb.com--->
 <html lang="en">
@@ -89,19 +67,19 @@ $json = json_encode($data);
   <body>
     <section class="container" style="display: block;">
       <header>demande de conge</header>
-      <form action="#" class="form">
+      <form  class="form" action="" method="post">
        <div class="gender-box">
           <div class="gender-option">
-            <div class="gender" name="type_conge">
-              <input type="radio" id="check-male"  name="type" onclick="toggleField(false)" />
+            <div class="gender" >
+              <input type="radio" id="check-male"  name="type_conge" onclick="toggleField(false)" />
               <label> annuel detente</label>
             </div>
             <div class="gender">
-              <input type="radio" id="check-female" name="type"onclick="toggleField(true)" />
+              <input type="radio" id="check-female"  name="type_conge"onclick="toggleField(true)" />
               <label >recuperation</label>
             </div>
             <div class="gender">
-              <input type="radio" id="check-other" name="type" onclick="toggleField(false)"/>
+              <input type="radio" id="check-other"  name="type_conge" onclick="toggleField(false)"/>
               <label >exceptionel</label>
             </div>
           </div>
@@ -123,7 +101,7 @@ $json = json_encode($data);
           <label>exercice</label>
           <input type="text" placeholder="" name="exercice" required />
           <label>nombre de jours demande</label>
-          <input type="text" placeholder=""  name="nbr_jours"required />
+          <input type="number" placeholder=""  name="nbr_jours"required />
 
           <div class="column">
             <div class="input-box">
@@ -158,7 +136,7 @@ $json = json_encode($data);
           <input type="number" placeholder="" name="num_titre" />
         </div>
       </div>
-        <button>Submit</button>
+        <button name="send">Submit</button>
       </form>
     </section>
     <script>
