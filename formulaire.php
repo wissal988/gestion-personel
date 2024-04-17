@@ -14,9 +14,6 @@ try {
 
 if (isset($_POST['send'])) {
     $type_conge = $_POST['type_conge'];
-    $fonction = $_POST['fonction'];
-    $affectation = $_POST['affectation'];
-    $exercice = $_POST['exercice'];
     $nbr_jours = $_POST['nbr_jours'];
     $date_d = $_POST['date_d'];
     $date_f = $_POST['date_f'];
@@ -26,33 +23,34 @@ if (isset($_POST['send'])) {
     $date_jour_s = $_POST['date_jour_s'];
     $num_titre = $_POST['num_titre'];
 
-    try {
-        // Préparation et exécution de la requête d'insertion
-        $sql = "INSERT INTO demande_conge 
-        VALUES (0,:type_conge,:fonction, :affectation,:exercice,:nbr_jours,:date_d,:date_f,:date_r,:date_p,:date_jour_f,:date_jour_s,:num_titre) ";
-        $requete = $conn->prepare($sql);
-        $requete->execute([
-            'type_conge' => $type_conge,
-            'fonction' => $fonction,
-            'affectation' => $affectation,
-            'exercice' => $exercice,
-            'nbr_jours' => $nbr_jours,
-            'date_d' => $date_d,
-            'date_f' => $date_f,
-            'date_r' => $date_r,
-            'date_p' => $date_p,
-            'date_jour_f' => $date_jour_f,
-            'date_jour_s' => $date_jour_s,
-            'num_titre' => $num_titre,
-        ]);
-        $reponse = $requete->fetchAll(PDO::FETCH_ASSOC);
-        var_dump($reponse);
-    } catch (PDOException $e) {
-        echo "Erreur : " . $e->getMessage();
+    // Check if the end date is after the start date and if the number of days corresponds to the difference between the end and start dates
+    if(strtotime($date_f) == strtotime("+$nbr_jours days", strtotime($date_d)) && strtotime($date_r) > strtotime($date_f) && strtotime($date_f) > strtotime($date_d)) {
+        try {
+            // Préparation et exécution de la requête d'insertion
+            $sql = "INSERT INTO demande_conge 
+            VALUES (0,:type_conge,:nbr_jours,:date_d,:date_f,:date_r,:date_p,:date_jour_f,:date_jour_s,:num_titre,0) ";
+            $requete = $conn->prepare($sql);
+            $requete->execute([
+                'type_conge' => $type_conge,
+                'nbr_jours' => $nbr_jours,
+                'date_d' => $date_d,
+                'date_f' => $date_f,
+                'date_r' => $date_r,
+                'date_p' => $date_p,
+                'date_jour_f' => $date_jour_f,
+                'date_jour_s' => $date_jour_s,
+                'num_titre' => $num_titre,
+            ]);
+            // $reponse = $requete->fetchAll(PDO::FETCH_ASSOC);
+            // var_dump($reponse);
+        } catch (PDOException $e) {
+            echo "Erreur : " . $e->getMessage();
+        }
+    } else {
+        echo "Les dates ne sont pas valides. Veuillez corriger les dates.";
     }
 }
 ?>
-
 <!DOCTYPE html>
 <!---Coding By CodingLab | www.codinglabweb.com--->
 <html lang="en">
@@ -71,35 +69,24 @@ if (isset($_POST['send'])) {
        <div class="gender-box">
           <div class="gender-option">
             <div class="gender" >
-              <input type="radio" id="check-male"  name="type_conge" onclick="toggleField(false)" />
+              <input type="radio" id="check-male"  name="type_conge" value="annuel detente"  onclick="toggleField(false)" />
               <label> annuel detente</label>
             </div>
             <div class="gender">
-              <input type="radio" id="check-female"  name="type_conge"onclick="toggleField(true)" />
+              <input type="radio" id="check-female"  name="type_conge"value="recuperation" onclick="toggleField(true)" />
               <label >recuperation</label>
             </div>
             <div class="gender">
-              <input type="radio" id="check-other"  name="type_conge" onclick="toggleField(false)"/>
+              <input type="radio" id="check-other"  name="type_conge" value="exceptionel"   onclick="toggleField(false)"/>
               <label >exceptionel</label>
             </div>
           </div>
         </div> 
         
 <div id="simple" style="display: block;">
-        <div class="column">
-          <div class="input-box">
-            <label>fonction</label>
-            <input type="text" placeholder="" name="fonction"required />
-          </div>
-          <div class="input-box">
-            <label>affectation</label>
-            <input type="text" placeholder="" name="affectation"required />
-          </div>
-        </div>
-        
+       
         <div class="input-box address">
-          <label>exercice</label>
-          <input type="text" placeholder="" name="exercice" required />
+          
           <label>nombre de jours demande</label>
           <input type="number" placeholder=""  name="nbr_jours"required />
 
