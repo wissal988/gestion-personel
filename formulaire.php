@@ -52,59 +52,57 @@ if (isset($_POST['send'])) {
 }
 ?>
 <!DOCTYPE html>
-<!---Coding By CodingLab | www.codinglabweb.com--->
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <!--<title>Registration Form in HTML CSS</title>-->
-    <!---Custom CSS File--->
-    <link rel="stylesheet" href="formulaire.css" />
-  </head>
-  <body>
-    <section class="container" style="display: block;">
-      <header>demande de conge</header>
-      <form  class="form" action="" method="post">
-       <div class="gender-box">
-          <div class="gender-option">
-            <div class="gender" >
-              <input type="radio" id="check-male"  name="type_conge" value="annuel detente"  onclick="toggleField(false)" />
-              <label> annuel detente</label>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Demande de congé</title>
+    <link rel="stylesheet" href="formulaire.css">
+</head>
+<body>
+<section class="container" style="display: block;">
+    <header>Demande de congé</header>
+    <form class="form" action="" method="post">
+        <div class="gender-box">
+            <div class="gender-option">
+                <div class="gender">
+                    <input type="radio" id="check-male" name="type_conge" value="annuel detente" onclick="toggleField(false)"  />
+                    <label>Annuel détente</label>
+                </div>
+                <div class="gender">
+                    <input type="radio" id="check-female" name="type_conge" value="recuperation" onclick="toggleField(true)"  />
+                    <label>Récupération</label>
+                </div>
+                <div class="gender">
+                    <input type="radio" id="check-other" name="type_conge" value="exceptionel" onclick="toggleField(false)" />
+                    <label>Exceptionnel</label>
+                </div>
             </div>
-            <div class="gender">
-              <input type="radio" id="check-female"  name="type_conge"value="recuperation" onclick="toggleField(true)" />
-              <label >recuperation</label>
-            </div>
-            <div class="gender">
-              <input type="radio" id="check-other"  name="type_conge" value="exceptionel"   onclick="toggleField(false)"/>
-              <label >exceptionel</label>
-            </div>
-          </div>
-        </div> 
-        
-<div id="simple" style="display: block;">
-       
-        <div class="input-box address">
-          
-          <label>nombre de jours demande</label>
-          <input type="number" placeholder=""  name="nbr_jours"required />
-
-          <div class="column">
-            <div class="input-box">
-            <label> date de depart</label>
-            <input type="date" placeholder="" name="date_d"required />
-            </div>
-            <div class="input-box">
-            <label> date de fin de conge</label>
-            <input type="date" placeholder="" name="date_f"required />
-          </div>
-            <div class="input-box">
-            <label> date de reprise</label>
-            <input type="date" placeholder=""name="date_r">
-          </div>
         </div>
-      </div>
+
+        <div id="simple" style="display: block;">
+            <div class="input-box address">
+                <label>Nombre de jours demandés</label>
+                <input type="number" placeholder="" name="nbr_jours" id="nbr_jours" required />
+
+                <div class="column">
+                    <div class="input-box">
+                        <label>Date de départ</label>
+                        <input type="date" placeholder="" name="date_d" id="date_d" onchange="updateEndDate()" required />
+                    </div>
+                    <div class="input-box">
+                        <label>Date de fin de congé</label>
+                        <input type="date" placeholder="" name="date_f" id="date_f" readonly />
+                    </div>
+                    <div class="input-box">
+                        <label>Date de reprise</label>
+                        <input type="date" placeholder="" name="date_r" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="recuperation" style="display: none;">
         <div class="input-box">
           <label>la date de permanance </label>
@@ -123,19 +121,42 @@ if (isset($_POST['send'])) {
           <input type="number" placeholder="" name="num_titre" />
         </div>
       </div>
-        <button name="send">Submit</button>
-      </form>
-    </section>
-    <script>
-      function toggleField(show) {
+      <div id="commentField" style="display:none;">
+  <div class="input-box">
+    <label>Description de votre cas</label>
+    <textarea id="risonl" name="raison" rows="4" cols="50"></textarea>
+  </div>
+</div>
+      <button type="submit" name="send">Submit</button>
+    </form>
+</section>
+<script>
+    function toggleField(show) {
   var recuperation = document.getElementById("recuperation");
   if (show) {
     recuperation.style.display = "block";
   } else {
     recuperation.style.display = "none";
   }
+
+  // Show or hide the comment field
+  if (document.getElementById("check-other").checked) {
+    document.getElementById("commentField").style.display = "block";
+  } else {
+    document.getElementById("commentField").style.display = "none";
+  }
 }
-      
-    </script>
-  </body>
+    
+
+    function updateEndDate() {
+        var startDate = document.getElementById("date_d").value;
+        var days = parseInt(document.getElementById("nbr_jours").value);
+        if (startDate && days) {
+            var endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + days);
+            document.getElementById("date_f").valueAsDate = endDate;
+        }
+    }
+</script>
+</body>
 </html>
