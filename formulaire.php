@@ -14,43 +14,43 @@ try {
 
 if (isset($_POST['send'])) {
     $type_conge = $_POST['type_conge'];
+    $exercice = $_POST['exercice'];
     $nbr_jours = $_POST['nbr_jours'];
     $date_d = $_POST['date_d'];
     $date_f = $_POST['date_f'];
     $date_r = $_POST['date_r'];
-    $date_p = $_POST['date_p'];
-    $date_jour_f = $_POST['date_jour_f'];
-    $date_jour_s = $_POST['date_jour_s'];
-    $num_titre = $_POST['num_titre'];
+    $date_requi = $_POST['date_requi'];
+    $raison = $_POST['raison'];
 
     // Check if the end date is after the start date and if the number of days corresponds to the difference between the end and start dates
     if(strtotime($date_f) == strtotime("+$nbr_jours days", strtotime($date_d)) && strtotime($date_r) > strtotime($date_f) && strtotime($date_f) > strtotime($date_d)) {
         try {
             // Préparation et exécution de la requête d'insertion
             $sql = "INSERT INTO demande_conge 
-            VALUES (0,:type_conge,:nbr_jours,:date_d,:date_f,:date_r,:date_p,:date_jour_f,:date_jour_s,:num_titre,0) ";
+            VALUES (0,:type_conge,:exercice,:nbr_jours,:date_d,:date_f,:date_r,:date_requi,:raison,0) ";
             $requete = $conn->prepare($sql);
             $requete->execute([
                 'type_conge' => $type_conge,
+                'exercice' => $exercice,
                 'nbr_jours' => $nbr_jours,
                 'date_d' => $date_d,
                 'date_f' => $date_f,
                 'date_r' => $date_r,
-                'date_p' => $date_p,
-                'date_jour_f' => $date_jour_f,
-                'date_jour_s' => $date_jour_s,
-                'num_titre' => $num_titre,
+                'date_requi' => $date_requi,
+                'raison' => $raison,
             ]);
             // $reponse = $requete->fetchAll(PDO::FETCH_ASSOC);
             // var_dump($reponse);
         } catch (PDOException $e) {
             echo "Erreur : " . $e->getMessage();
         }
+    
     } else {
-        echo "Les dates ne sont pas valides. Veuillez corriger les dates.";
+        echo '<script>alert(" Les dates ne sont pas valides. Veuillez corriger les dates ")</script>';
     }
-}
+} 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -99,27 +99,20 @@ if (isset($_POST['send'])) {
                         <label>Date de reprise</label>
                         <input type="date" placeholder="" name="date_r" />
                     </div>
+                    <div class="input-box">
+                        <label>exercice</label>
+                        <input type="text" placeholder="" name="exercice" />
+                    </div>
                 </div>
             </div>
         </div>
 
         <div id="recuperation" style="display: none;">
         <div class="input-box">
-          <label>la date de permanance </label>
-          <input type="date" placeholder="" name="date_p" />
+          <label>la date de requisition </label>
+          <input type="date" placeholder="" name="date_requi" readonly />
         </div>
-        <div class="input-box">
-          <label>la date du jour ferie</label>
-          <input type="date" placeholder="" name="date_jour_f" />
-        </div>
-        <div class="input-box">
-          <label>la date des heures supplementaire</label>
-          <input type="date" placeholder="" name="date_jour_s" />
-        </div>
-        <div class="input-box">
-          <label>numero du titre de conge</label>
-          <input type="number" placeholder="" name="num_titre" />
-        </div>
+        
       </div>
       <div id="commentField" style="display:none;">
   <div class="input-box">
